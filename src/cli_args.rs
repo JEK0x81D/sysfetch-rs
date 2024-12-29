@@ -7,6 +7,10 @@ pub(crate) struct Cli {
     #[arg(long)]
     pub(crate) show_distro: bool,
 
+    /// Whether to show desktop environment.
+    #[arg(long)]
+    pub(crate) show_desktop_env: bool,
+    
     /// Whether to show device name.
     #[arg(long)]
     pub(crate) show_device_name: bool,
@@ -30,7 +34,6 @@ pub(crate) struct Cli {
     /// Whether to show motherboard name.
     #[arg(long)]
     pub(crate) show_motherboard: bool,
-
 
     /// Whether to show motherboard manufacturer name.
     #[arg(long)]

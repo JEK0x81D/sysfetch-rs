@@ -60,6 +60,10 @@ pub(crate) fn build_info_lines(args: &Cli, system: &System) -> Vec<String> {
         info_lines.push(get_entry_formatted("Distro", &whoami::distro()));
     }
 
+    if args.show_desktop_env || args.show_all {
+        info_lines.push(get_entry_formatted("Desktop Environment", &whoami::desktop_env().to_string()));
+    }
+
     if args.show_device_name || args.show_all {
         info_lines.push(get_entry_formatted("Device", &whoami::devicename()));
     }
