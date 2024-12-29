@@ -10,7 +10,7 @@ pub(crate) struct Cli {
     /// Whether to show desktop environment.
     #[arg(long)]
     pub(crate) show_desktop_env: bool,
-    
+
     /// Whether to show device name.
     #[arg(long)]
     pub(crate) show_device_name: bool,
@@ -26,10 +26,6 @@ pub(crate) struct Cli {
     /// Whether to show number of packages installed.
     #[arg(long)]
     pub(crate) show_packages: bool,
-
-    /// Whether to show what shell is in use.
-    #[arg(long)]
-    pub(crate) show_shell: bool,
 
     /// Whether to show motherboard name.
     #[arg(long)]

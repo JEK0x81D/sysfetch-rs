@@ -10,6 +10,7 @@ mod icon_art;
 mod cli_args;
 mod info_builder;
 mod duration_extras;
+mod package_counter;
 
 fn get_icon_art() -> IconArt {
     IconArt::from_str(

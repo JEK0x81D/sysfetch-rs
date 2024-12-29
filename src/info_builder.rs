@@ -8,6 +8,7 @@ use sysinfo::{System};
 use wgpu::DeviceType;
 use crate::cli_args::Cli;
 use crate::duration_extras::DisplayableDuration;
+use crate::package_counter::get_package_counts;
 
 fn get_entry_formatted(label: &str, value: &str) -> String
 {
@@ -81,6 +82,10 @@ pub(crate) fn build_info_lines(args: &Cli, system: &System) -> Vec<String> {
                 info_lines.push(get_entry_formatted("Uptime", "Unknown"));
             }
         }
+    }
+
+    if args.show_packages || args.show_all {
+        info_lines.push(get_entry_formatted("Packages", &get_package_counts().into_iter().map(|(name, count)| format!("{name} ({count})")).join(", ")));
     }
 
     if args.show_motherboard || args.show_all {
