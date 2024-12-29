@@ -1,4 +1,5 @@
 ﻿use clap::Parser;
+use crate::icon_art::IconArt;
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -69,5 +70,9 @@ pub(crate) struct Cli {
 
     /// Flag to show all entries.
     #[arg(short='a', long)]
-    pub(crate) show_all: bool
+    pub(crate) show_all: bool,
+
+    /// Override for icon art.
+    #[arg(long, value_enum, ignore_case=true)]
+    pub(crate) icon_art: Option<IconArt>
 }

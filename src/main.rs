@@ -12,7 +12,7 @@ mod info_builder;
 mod duration_extras;
 mod package_counter;
 
-fn get_icon_art() -> IconArt {
+fn get_system_icon_art() -> IconArt {
     IconArt::from_str(
         System::name().unwrap_or_default().as_str()
     ).unwrap_or(IconArt::Unknown)
@@ -42,5 +42,5 @@ fn main() {
     system.refresh_cpu_all();
 
     let info_lines = build_info_lines(&args, &system);
-    render(get_icon_art(), &info_lines.iter().map(String::as_str).collect::<Vec<&str>>());
+    render(args.icon_art.unwrap_or(get_system_icon_art()), &info_lines.iter().map(String::as_str).collect::<Vec<&str>>());
 }
