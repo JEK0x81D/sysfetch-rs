@@ -27,6 +27,15 @@ pub(crate) struct Cli {
     #[arg(long)]
     pub(crate) show_shell: bool,
 
+    /// Whether to show motherboard name.
+    #[arg(long)]
+    pub(crate) show_motherboard: bool,
+
+
+    /// Whether to show motherboard manufacturer name.
+    #[arg(long)]
+    pub(crate) show_motherboard_manufacturer: bool,
+
     /// Whether to show CPU name.
     #[arg(long)]
     pub(crate) show_cpu: bool,

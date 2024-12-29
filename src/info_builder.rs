@@ -3,7 +3,7 @@ use frequency_unit::Frequency;
 use humansize::{format_size, FormatSizeOptions};
 use itertools::Itertools;
 use local_ip_address::local_ip;
-use smbioslib::{table_load_from_device, ProcessorSpeed, SMBiosProcessorInformation};
+use smbioslib::{table_load_from_device, ProcessorSpeed, SMBiosBaseboardInformation, SMBiosProcessorInformation};
 use sysinfo::{System};
 use wgpu::DeviceType;
 use crate::cli_args::Cli;
@@ -25,6 +25,22 @@ fn get_cpu_frequency() -> Option<Frequency> {
                 return Some(Frequency::from_mhz(value));
             }
         }
+    }
+
+    None
+}
+
+fn get_motherboard_name() -> Option<String> {
+    if let Ok(data) = table_load_from_device() {
+        return data.find_map(|sys_info: SMBiosBaseboardInformation| sys_info.product().ok());
+    }
+
+    None
+}
+
+fn get_motherboard_manufacturer() -> Option<String> {
+    if let Ok(data) = table_load_from_device() {
+        return data.find_map(|sys_info: SMBiosBaseboardInformation| sys_info.manufacturer().ok());
     }
 
     None
@@ -61,6 +77,14 @@ pub(crate) fn build_info_lines(args: &Cli, system: &System) -> Vec<String> {
                 info_lines.push(get_entry_formatted("Uptime", "Unknown"));
             }
         }
+    }
+
+    if args.show_motherboard || args.show_all {
+        info_lines.push(get_entry_formatted("Motherboard Name", &get_motherboard_name().unwrap_or("Unknown".to_string())));
+    }
+
+    if args.show_motherboard_manufacturer || args.show_all {
+        info_lines.push(get_entry_formatted("Motherboard Manufacturer", &get_motherboard_manufacturer().unwrap_or("Unknown".to_string())));
     }
 
     if args.show_cpu || args.show_all {
