@@ -41,3 +41,5 @@ Cargo.lock
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+
+flamegraph.svg

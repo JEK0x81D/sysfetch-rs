@@ -117,15 +117,15 @@ pub(crate) fn build_info_lines(args: &Cli, system: &System) -> Vec<String> {
     }
 
 
-    // GPU enumeration.
-    let instance = wgpu::Instance::default();
+    if args.show_gpu || args.show_all {
+        // GPU enumeration.
+        let instance = wgpu::Instance::default();
 
-    for (index, adapter) in instance.enumerate_adapters(wgpu::Backends::all()).iter()
-        .filter(|adapter| [DeviceType::DiscreteGpu, DeviceType::IntegratedGpu].contains(&adapter.get_info().device_type))
-        .sorted_by(|a, b| Ord::cmp(&a.get_info().device, &b.get_info().device))
-        .dedup_by(|a, b| a.get_info().device == b.get_info().device)
-        .enumerate() {
-        if args.show_gpu || args.show_all {
+        for (index, adapter) in instance.enumerate_adapters(wgpu::Backends::all()).iter()
+            .filter(|adapter| [DeviceType::DiscreteGpu, DeviceType::IntegratedGpu].contains(&adapter.get_info().device_type))
+            .sorted_by(|a, b| Ord::cmp(&a.get_info().device, &b.get_info().device))
+            .dedup_by(|a, b| a.get_info().device == b.get_info().device)
+            .enumerate() {
             info_lines.push(get_entry_formatted(&format!("GPU {}", index + 1), &adapter.get_info().name));
         }
     }
